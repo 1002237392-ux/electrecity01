@@ -799,6 +799,17 @@
     margin: 16px 0;
   }
 
+  .two-part-field { display: flex; flex-direction: column; gap: 4px; }
+  .part-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--light-blue);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
   /* ===== SCORING PANEL ===== */
   .scoring-grid {
     display: grid;
@@ -1026,10 +1037,6 @@
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 700px) {
-    .scoring-grid { grid-template-columns: 1fr 1fr; }
-    .export-buttons { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 700px) {
     .header-inner { flex-direction: column; text-align: center; }
     .header-title h1 { font-size: 1.4rem; }
     .student-fields { grid-template-columns: 1fr; }
@@ -1041,6 +1048,10 @@
     .reflection-grid { grid-template-columns: 1fr; }
     .rubric-table { font-size: 0.78rem; }
     .meta-item { padding: 8px 14px; font-size: 0.85rem; }
+    .scoring-grid { grid-template-columns: 1fr 1fr; }
+    .export-buttons { grid-template-columns: 1fr; }
+    .total-display { gap: 10px; padding: 16px; }
+    .total-number { font-size: 2.2rem; }
   }
 </style>
 </head>
@@ -1256,47 +1267,115 @@
     </div>
 
     <!-- COMPARISON TABLE -->
-    <h3 style="color:var(--primary); font-size:1.1rem; margin: 20px 0 12px; font-weight:800;">جدول المقارنة التحليلية</h3>
-    <p style="color:var(--text-mid); margin-bottom:14px; font-size:0.93rem;">أكمل الجدول التالي بتحليل كل خاصية في نوعَي التوصيل:</p>
+    <h3 style="color:var(--primary); font-size:1.1rem; margin: 20px 0 8px; font-weight:800;">جدول المقارنة التحليلية</h3>
+
+    <!-- Given values banner -->
+    <div style="background:linear-gradient(135deg,#1a3a6b,#2563a8); border-radius:12px; padding:14px 20px; margin-bottom:14px; color:white;">
+      <div style="font-weight:700; font-size:0.9rem; margin-bottom:10px; color:#f0a500;">📌 المعطيات المشتركة للجدول — استخدمها في حساباتك:</div>
+      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <span style="background:rgba(255,255,255,0.15); padding:5px 14px; border-radius:20px; font-size:0.88rem; font-weight:700;">R₁ = 3 Ω</span>
+        <span style="background:rgba(255,255,255,0.15); padding:5px 14px; border-radius:20px; font-size:0.88rem; font-weight:700;">R₂ = 6 Ω</span>
+        <span style="background:rgba(255,255,255,0.15); padding:5px 14px; border-radius:20px; font-size:0.88rem; font-weight:700;">V = 18 V</span>
+        <span style="background:rgba(240,165,0,0.3); padding:5px 14px; border-radius:20px; font-size:0.85rem;">نفس المعطيات تُطبَّق على نوعَي التوصيل</span>
+      </div>
+    </div>
+
+    <p style="color:var(--text-mid); margin-bottom:14px; font-size:0.93rem;">أكمل الجدول: اكتب القانون أولاً، ثم احسب القيمة الفعلية باستخدام المعطيات أعلاه.</p>
+
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>وجه المقارنة</th>
+          <th style="width:22%;">وجه المقارنة</th>
           <th>التوصيل على التوالي 🔗</th>
           <th>التوصيل على التوازي ⚡</th>
         </tr>
       </thead>
       <tbody>
+
+        <!-- ROW 1: paths -->
         <tr>
           <td class="category">عدد مسارات التيار</td>
-          <td><textarea class="answer-field" placeholder="اكتب إجابتك هنا..."></textarea></td>
-          <td><textarea class="answer-field" placeholder="اكتب إجابتك هنا..."></textarea></td>
+          <td><textarea class="answer-field" placeholder="كم مساراً يسلكه التيار؟"></textarea></td>
+          <td><textarea class="answer-field" placeholder="كم مساراً يسلكه التيار؟"></textarea></td>
         </tr>
+
+        <!-- ROW 2: total resistance — law + calculation -->
         <tr>
-          <td class="category">قيمة التيار عبر المقاومات</td>
-          <td><textarea class="answer-field" placeholder="اكتب إجابتك هنا..."></textarea></td>
-          <td><textarea class="answer-field" placeholder="اكتب إجابتك هنا..."></textarea></td>
+          <td class="category">المقاومة الكلية<br><small style="font-weight:400;font-size:0.78rem;">(القانون + الحساب)</small></td>
+          <td>
+            <div class="two-part-field">
+              <div class="part-label">📐 القانون:</div>
+              <textarea class="answer-field" placeholder="اكتب المعادلة... مثال: R_T = R₁ + R₂"></textarea>
+              <div class="part-label" style="margin-top:6px;">🔢 الحساب (بالمعطيات):</div>
+              <textarea class="answer-field" placeholder="R_T = 3 + 6 = __ Ω"></textarea>
+            </div>
+          </td>
+          <td>
+            <div class="two-part-field">
+              <div class="part-label">📐 القانون:</div>
+              <textarea class="answer-field" placeholder="اكتب المعادلة... مثال: 1/R_T = 1/R₁ + 1/R₂"></textarea>
+              <div class="part-label" style="margin-top:6px;">🔢 الحساب (بالمعطيات):</div>
+              <textarea class="answer-field" placeholder="1/R_T = 1/3 + 1/6 = __ → R_T = __ Ω"></textarea>
+            </div>
+          </td>
         </tr>
+
+        <!-- ROW 3: current — law + calculation -->
         <tr>
-          <td class="category">الجهد على كل مقاومة</td>
-          <td><textarea class="answer-field" placeholder="اكتب إجابتك هنا..."></textarea></td>
-          <td><textarea class="answer-field" placeholder="اكتب إجابتك هنا..."></textarea></td>
+          <td class="category">التيار عبر المقاومات<br><small style="font-weight:400;font-size:0.78rem;">(القانون + الحساب)</small></td>
+          <td>
+            <div class="two-part-field">
+              <div class="part-label">📐 القانون / الخاصية:</div>
+              <textarea class="answer-field" placeholder="ماذا يحدث للتيار في التوالي؟ I₁ = I₂ = ..."></textarea>
+              <div class="part-label" style="margin-top:6px;">🔢 احسب التيار الكلي I:</div>
+              <textarea class="answer-field" placeholder="I = V ÷ R_T = 18 ÷ __ = __ A"></textarea>
+            </div>
+          </td>
+          <td>
+            <div class="two-part-field">
+              <div class="part-label">📐 القانون / الخاصية:</div>
+              <textarea class="answer-field" placeholder="ماذا يحدث للتيار في التوازي؟ I_T = I₁ + I₂"></textarea>
+              <div class="part-label" style="margin-top:6px;">🔢 احسب I₁ و I₂ والكلي:</div>
+              <textarea class="answer-field" placeholder="I₁ = V÷R₁ = 18÷3 = __ A&#10;I₂ = V÷R₂ = 18÷6 = __ A&#10;I_T = __ + __ = __ A"></textarea>
+            </div>
+          </td>
         </tr>
+
+        <!-- ROW 4: voltage — law + calculation -->
         <tr>
-          <td class="category">قانون المقاومة الكلية</td>
-          <td><textarea class="answer-field" placeholder="اكتب المعادلة..."></textarea></td>
-          <td><textarea class="answer-field" placeholder="اكتب المعادلة..."></textarea></td>
+          <td class="category">الجهد على كل مقاومة<br><small style="font-weight:400;font-size:0.78rem;">(القانون + الحساب)</small></td>
+          <td>
+            <div class="two-part-field">
+              <div class="part-label">📐 القانون / الخاصية:</div>
+              <textarea class="answer-field" placeholder="ماذا يحدث للجهد في التوالي؟ V_T = V₁ + V₂"></textarea>
+              <div class="part-label" style="margin-top:6px;">🔢 احسب V₁ و V₂:</div>
+              <textarea class="answer-field" placeholder="V₁ = I × R₁ = __ × 3 = __ V&#10;V₂ = I × R₂ = __ × 6 = __ V&#10;تحقق: V₁+V₂ = __ = 18V ✓"></textarea>
+            </div>
+          </td>
+          <td>
+            <div class="two-part-field">
+              <div class="part-label">📐 القانون / الخاصية:</div>
+              <textarea class="answer-field" placeholder="ماذا يحدث للجهد في التوازي؟ V₁ = V₂ = V_T"></textarea>
+              <div class="part-label" style="margin-top:6px;">🔢 الجهد على كل مقاومة:</div>
+              <textarea class="answer-field" placeholder="V₁ = V₂ = V_T = __ V (لماذا؟)"></textarea>
+            </div>
+          </td>
         </tr>
+
+        <!-- ROW 5: broken resistor -->
         <tr>
           <td class="category">ماذا يحدث لو انقطعت مقاومة؟</td>
-          <td><textarea class="answer-field" placeholder="حلّل ما يحدث..."></textarea></td>
-          <td><textarea class="answer-field" placeholder="حلّل ما يحدث..."></textarea></td>
+          <td><textarea class="answer-field" placeholder="ماذا يحدث للدائرة كلها؟ ولماذا؟"></textarea></td>
+          <td><textarea class="answer-field" placeholder="ماذا يحدث للمقاومات الأخرى؟ ولماذا؟"></textarea></td>
         </tr>
+
+        <!-- ROW 6: daily example -->
         <tr>
           <td class="category">مثال من الحياة اليومية</td>
-          <td><textarea class="answer-field" placeholder="فكّر في مثال..."></textarea></td>
-          <td><textarea class="answer-field" placeholder="فكّر في مثال..."></textarea></td>
+          <td><textarea class="answer-field" placeholder="فكّر في مثال تراه في حياتك..."></textarea></td>
+          <td><textarea class="answer-field" placeholder="فكّر في مثال تراه في حياتك..."></textarea></td>
         </tr>
+
       </tbody>
     </table>
   </div>
@@ -1894,6 +1973,392 @@
 
   // Initialize simulator
   updateSim();
+</script>
+
+<!-- jsPDF for client-side PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+
+// ===== SCORING LOGIC =====
+function calcTotal() {
+  const ids = ['sc1','sc2','sc3','sc4','sc5','sc6'];
+  let total = 0;
+  ids.forEach(id => {
+    const v = parseFloat(document.getElementById(id).value) || 0;
+    total += Math.min(4, Math.max(0, v));
+  });
+  document.getElementById('totalNum').textContent = total;
+  const pct = Math.round((total / 24) * 100);
+  document.getElementById('totalPct').textContent = pct + '%';
+  let grade = '—';
+  if (total >= 22)      grade = 'ممتاز 🏆';
+  else if (total >= 18) grade = 'جيد جداً 🌟';
+  else if (total >= 14) grade = 'جيد 📘';
+  else if (total >= 10) grade = 'مقبول 📝';
+  else if (total > 0)   grade = 'يحتاج دعم 💪';
+  document.getElementById('totalGrade').textContent = grade;
+  return { total, pct, grade };
+}
+
+// ===== COLLECT ALL ANSWERS =====
+function collectData() {
+  const studentName  = document.querySelectorAll('.field-group input')[0]?.value || '—';
+  const studentId    = document.querySelectorAll('.field-group input')[1]?.value || '—';
+  const studentClass = document.querySelectorAll('.field-group input')[2]?.value || '—';
+  const now = new Date().toLocaleDateString('ar-SA', { year:'numeric', month:'long', day:'numeric' });
+
+  // Comparison table answers
+  const tableAnswers = [...document.querySelectorAll('.answer-field')].map(f => f.value.trim() || '(لم تُكتب إجابة)');
+  const tableLabels = [
+    'عدد مسارات التيار – التوالي', 'عدد مسارات التيار – التوازي',
+    'قيمة التيار – التوالي', 'قيمة التيار – التوازي',
+    'الجهد على المقاومات – التوالي', 'الجهد على المقاومات – التوازي',
+    'قانون المقاومة – التوالي', 'قانون المقاومة – التوازي',
+    'قطع مقاومة – التوالي', 'قطع مقاومة – التوازي',
+    'مثال حياتي – التوالي', 'مثال حياتي – التوازي'
+  ];
+
+  // Calculation inputs
+  const calcInputs = [...document.querySelectorAll('.calc-input')].map(f => f.value.trim() || '—');
+  const calcLabelsA = ['المقاومة الكلية R_T','التيار الكلي I','الجهد V1','الجهد V2','الجهد V3','التحقق V1+V2+V3'];
+  const calcLabelsB = ['1/R_T','المقاومة الكلية R_T','التيار الكلي I_T','التيار I1','التيار I2','التحقق I1+I2'];
+
+  // Long answers (textareas except reflection)
+  const allTextareas = [...document.querySelectorAll('textarea')];
+  const longAnswers = allTextareas.slice(0, allTextareas.length - 5).map(t => t.value.trim() || '(لم تُكتب إجابة)');
+  const longLabels = [
+    'تحليل المحاكي – السؤال أ',
+    'تحليل المحاكي – السؤال ب',
+    'تحليل المحاكي – السؤال ج',
+    'التحدي – لماذا انطفأت المصابيح',
+    'التحدي – حسابات السيناريو',
+    'التحدي – أمثلة إبداعية'
+  ];
+
+  // Reflection
+  const reflTextareas = allTextareas.slice(-5, -1);
+  const reflLabels = ['أكثر شيء تعلمته','الجزء الأصعب','سؤال ما زلت أفكر فيه','كيف سأستخدم ما تعلمته'];
+  const reflAnswers = reflTextareas.map(t => t.value.trim() || '—');
+
+  const starCount = [...document.querySelectorAll('.star-btn')].filter(s => s.classList.contains('active')).length;
+  const ratingText = document.getElementById('ratingText').textContent;
+
+  // Scores
+  const scoreLabels = ['جدول المقارنة','حسابات التوالي','حسابات التوازي','تحليل المحاكي','سيناريو أحمد وسلمى','التأمل الذاتي'];
+  const scoreIds = ['sc1','sc2','sc3','sc4','sc5','sc6'];
+  const scores = scoreIds.map(id => parseFloat(document.getElementById(id).value) || 0);
+  const { total, pct, grade } = calcTotal();
+  const comment = document.getElementById('teacherComment').value.trim();
+
+  return { studentName, studentId, studentClass, now, tableLabels, tableAnswers,
+           calcLabelsA, calcLabelsB, calcInputs, longLabels, longAnswers,
+           reflLabels, reflAnswers, starCount, ratingText, scoreLabels, scores,
+           total, pct, grade, comment };
+}
+
+// ===== BUILD TEXT SUMMARY =====
+function buildTextSummary(d) {
+  const line = '━'.repeat(52);
+  const thin = '─'.repeat(52);
+  let txt = '';
+  txt += '⚡ ورقة عمل: الدوائر الكهربائية\n';
+  txt += 'الصف الثامن | مادة الفيزياء | المعلمة: منى مصطفى\n';
+  txt += line + '\n\n';
+
+  txt += '👤 بيانات الطالب/ة\n' + thin + '\n';
+  txt += `الاسم: ${d.studentName}\n`;
+  txt += `الرقم: ${d.studentId}\n`;
+  txt += `الشعبة: ${d.studentClass}\n`;
+  txt += `تاريخ التقييم: ${d.now}\n\n`;
+
+  txt += '📋 النشاط الأول: جدول المقارنة\n' + thin + '\n';
+  d.tableLabels.forEach((lbl, i) => {
+    txt += `• ${lbl}:\n  ${d.tableAnswers[i]}\n`;
+  });
+  txt += '\n';
+
+  txt += '🔢 النشاط الثاني: حسابات التوالي\n' + thin + '\n';
+  d.calcLabelsA.forEach((lbl, i) => {
+    txt += `• ${lbl}: ${d.calcInputs[i] || '—'}\n`;
+  });
+  txt += '\nحسابات التوازي:\n';
+  d.calcLabelsB.forEach((lbl, i) => {
+    txt += `• ${lbl}: ${d.calcInputs[i + 6] || '—'}\n`;
+  });
+  txt += '\n';
+
+  txt += '🔌 النشاط الثالث: تحليل المحاكي\n' + thin + '\n';
+  d.longLabels.slice(0,3).forEach((lbl, i) => {
+    txt += `• ${lbl}:\n  ${d.longAnswers[i]}\n`;
+  });
+  txt += '\n';
+
+  txt += '🏠 النشاط الرابع: تحدي التفكير\n' + thin + '\n';
+  d.longLabels.slice(3).forEach((lbl, i) => {
+    txt += `• ${lbl}:\n  ${d.longAnswers[i + 3]}\n`;
+  });
+  txt += '\n';
+
+  txt += '🪞 التأمل الذاتي\n' + thin + '\n';
+  d.reflLabels.forEach((lbl, i) => {
+    txt += `• ${lbl}:\n  ${d.reflAnswers[i]}\n`;
+  });
+  txt += `• تقييم مستوى الفهم الذاتي: ${'⭐'.repeat(d.starCount)} (${d.starCount}/5)\n  ${d.ratingText}\n\n`;
+
+  txt += line + '\n';
+  txt += '📊 التقييم الختامي\n' + thin + '\n';
+  d.scoreLabels.forEach((lbl, i) => {
+    const bar = '█'.repeat(d.scores[i]) + '░'.repeat(4 - d.scores[i]);
+    txt += `• ${lbl}: ${bar} ${d.scores[i]}/4\n`;
+  });
+  txt += thin + '\n';
+  txt += `  الدرجة الكلية: ${d.total} / 24\n`;
+  txt += `  النسبة المئوية: ${d.pct}%\n`;
+  txt += `  التقدير: ${d.grade}\n`;
+  if (d.comment) txt += `\n💬 ملاحظات المعلمة:\n${d.comment}\n`;
+  txt += line + '\n';
+  txt += 'تم إنشاء هذا التقرير من ورقة العمل التفاعلية\n';
+  return txt;
+}
+
+// ===== EXPORT TXT =====
+function exportTXT() {
+  const d = collectData();
+  const txt = buildTextSummary(d);
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `تقييم_${d.studentName || 'الطالب'}_الدوائر_الكهربائية.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ===== SHOW MODAL PREVIEW =====
+function exportPDF() {
+  const d = collectData();
+  const preview = buildTextSummary(d);
+  document.getElementById('modalBody').textContent = preview;
+  document.getElementById('pdfModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('pdfModal').style.display = 'none';
+}
+
+// ===== GENERATE PDF via jsPDF =====
+function doPDFDownload() {
+  const d = collectData();
+
+  if (typeof window.jspdf === 'undefined') {
+    alert('⚠️ مكتبة PDF لم تُحمَّل بعد. جرّب تصدير النص أو الطباعة.');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  const W = 210, margin = 14;
+  let y = 18;
+
+  const navy   = [26, 58, 107];
+  const gold   = [240, 165, 0];
+  const teal   = [42, 157, 143];
+  const red    = [230, 57, 70];
+  const white  = [255, 255, 255];
+  const ltblue = [232, 244, 253];
+  const gray   = [80, 100, 120];
+
+  function hdr(text, bg, fg, ht=8) {
+    doc.setFillColor(...bg);
+    doc.roundedRect(margin, y, W - 2*margin, ht+4, 3, 3, 'F');
+    doc.setTextColor(...fg);
+    doc.setFontSize(11);
+    doc.setFont('helvetica','bold');
+    // Draw LTR label with RTL Arabic manually (jsPDF is LTR-only for Latin)
+    doc.text(text, W - margin - 2, y + ht - 1, { align: 'right' });
+    y += ht + 6;
+  }
+
+  function sectionLine(label, value, bgRow) {
+    const labelW = 58, valW = W - 2*margin - labelW - 4;
+    if (bgRow) { doc.setFillColor(...bgRow); doc.rect(margin, y-1, W-2*margin, 7, 'F'); }
+    doc.setFillColor(...navy);
+    doc.roundedRect(margin, y, labelW, 6, 1.5, 1.5, 'F');
+    doc.setTextColor(...white);
+    doc.setFontSize(8);
+    doc.setFont('helvetica','bold');
+    doc.text(sanitize(label), margin + labelW - 2, y + 4, { align: 'right' });
+    doc.setFillColor(250,252,255);
+    doc.roundedRect(margin + labelW + 2, y, valW, 6, 1.5, 1.5, 'F');
+    doc.setTextColor(...gray);
+    doc.setFont('helvetica','normal');
+    const valText = sanitize(value || '—').substring(0, 90);
+    doc.text(valText, margin + labelW + valW, y + 4, { align: 'right' });
+    y += 8;
+    checkNewPage();
+  }
+
+  function multiLine(label, value) {
+    doc.setFillColor(...ltblue);
+    doc.roundedRect(margin, y, W-2*margin, 6, 1.5, 1.5, 'F');
+    doc.setTextColor(...navy);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica','bold');
+    doc.text(sanitize(label), W - margin - 2, y + 4.5, { align: 'right' });
+    y += 7;
+    doc.setTextColor(...gray);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(8);
+    const lines = doc.splitTextToSize(sanitize(value || '—').substring(0, 300), W - 2*margin - 4);
+    lines.forEach(ln => {
+      doc.text(ln, W - margin - 2, y + 4, { align: 'right' });
+      y += 5.5;
+      checkNewPage();
+    });
+    y += 3;
+    checkNewPage();
+  }
+
+  function checkNewPage(need=20) {
+    if (y > 280) { doc.addPage(); y = 16; }
+  }
+
+  function sanitize(str) {
+    return (str || '').replace(/[^\x00-\x7E\u0600-\u06FF\u0750-\u077F .,:;!?()\-\/\\%@#&*+='"`~\[\]{}<>_^]/g, '').trim();
+  }
+
+  function scoreBar(label, score, max=4) {
+    const barW = 60, cellH = 7;
+    doc.setFillColor(...ltblue);
+    doc.rect(margin, y, W-2*margin, cellH, 'F');
+    doc.setTextColor(...navy);
+    doc.setFontSize(8);
+    doc.setFont('helvetica','bold');
+    doc.text(sanitize(label), W - margin - 2, y + 4.5, { align: 'right' });
+    // Bar background
+    const barX = margin + 2;
+    doc.setFillColor(210,220,230);
+    doc.roundedRect(barX, y + 1.5, barW, cellH - 3, 1, 1, 'F');
+    const filled = (score / max) * barW;
+    const bc = score >= 3 ? teal : score >= 2 ? gold : red;
+    doc.setFillColor(...bc);
+    if (filled > 0) doc.roundedRect(barX, y + 1.5, filled, cellH - 3, 1, 1, 'F');
+    doc.setTextColor(...gray);
+    doc.text(`${score}/${max}`, barX + barW + 4, y + 4.5, { align: 'left' });
+    y += cellH + 2;
+    checkNewPage();
+  }
+
+  // -------- PAGE 1: HEADER --------
+  // Title block
+  doc.setFillColor(...navy);
+  doc.roundedRect(margin, y, W - 2*margin, 28, 4, 4, 'F');
+  doc.setTextColor(...gold);
+  doc.setFontSize(15);
+  doc.setFont('helvetica','bold');
+  doc.text('Physics Assessment Report', W/2, y + 10, { align: 'center' });
+  doc.setTextColor(220, 235, 255);
+  doc.setFontSize(9);
+  doc.text('Al-Dawair Al-Kahrabaia | Grade 8 | Teacher: Mona Mustafa', W/2, y + 18, { align: 'center' });
+  doc.setTextColor(...gold);
+  doc.setFontSize(8);
+  doc.text(d.now, W/2, y + 24, { align: 'center' });
+  y += 34;
+
+  // Student info
+  hdr('Student Information', navy, gold);
+  sectionLine('Name', d.studentName);
+  sectionLine('Student ID', d.studentId);
+  sectionLine('Class', d.studentClass);
+  y += 4;
+
+  // -------- ACTIVITY 1 --------
+  hdr('Activity 1: Comparison Table', teal, white);
+  const pairLabels = ['Current Paths','Current Value','Voltage','Resistance Formula','Broken Resistor','Daily Example'];
+  pairLabels.forEach((lbl, i) => {
+    sectionLine(lbl + ' (Series)', d.tableAnswers[i*2],     i%2===0 ? null : ltblue);
+    sectionLine(lbl + ' (Parallel)', d.tableAnswers[i*2+1], i%2===0 ? ltblue : null);
+  });
+  y += 4;
+
+  // -------- ACTIVITY 2 --------
+  hdr('Activity 2: Calculations', [90, 50, 180], white);
+  hdr('(A) Series Circuit  R1=4 R2=6 R3=10 V=40V', [120, 80, 200], white, 6);
+  d.calcLabelsA.forEach((lbl, i) => sectionLine(lbl, d.calcInputs[i], i%2===0?null:ltblue));
+  y += 2;
+  hdr('(B) Parallel Circuit  R1=6 R2=12 V=12V', [120, 80, 200], white, 6);
+  d.calcLabelsB.forEach((lbl, i) => sectionLine(lbl, d.calcInputs[i+6], i%2===0?null:ltblue));
+  y += 4;
+
+  // -------- ACTIVITY 3 --------
+  checkNewPage(50);
+  hdr('Activity 3: Simulator Analysis', [230, 130, 0], white);
+  ['Q-A: Series resistance observation','Q-B: Parallel resistance vs smallest','Q-C: Why parallel in homes?'].forEach((lbl,i)=>{
+    multiLine(lbl, d.longAnswers[i]);
+  });
+
+  // -------- ACTIVITY 4 --------
+  hdr('Activity 4: Deep Thinking Challenge', red, white);
+  ['Why bulbs went out (Ahmed)','Calculations – Ahmed & Salma','Creative Daily Examples'].forEach((lbl,i)=>{
+    multiLine(lbl, d.longAnswers[i+3]);
+  });
+
+  // -------- SELF REFLECTION --------
+  checkNewPage(40);
+  hdr('Self Reflection', [80, 160, 140], white);
+  d.reflLabels.forEach((lbl, i) => multiLine(lbl, d.reflAnswers[i]));
+  sectionLine('Self Rating', `${'★'.repeat(d.starCount)}${'☆'.repeat(5-d.starCount)} (${d.starCount}/5)`);
+  y += 4;
+
+  // -------- SCORES PAGE --------
+  doc.addPage(); y = 16;
+  doc.setFillColor(...navy);
+  doc.roundedRect(margin, y, W-2*margin, 14, 3, 3, 'F');
+  doc.setTextColor(...gold);
+  doc.setFontSize(13);
+  doc.setFont('helvetica','bold');
+  doc.text('Final Assessment Summary', W/2, y+9, {align:'center'});
+  y += 18;
+
+  hdr('Scores by Criterion', teal, white);
+  d.scoreLabels.forEach((lbl, i) => scoreBar(lbl, d.scores[i]));
+  y += 6;
+
+  // Total box
+  const pctColor = d.pct >= 85 ? teal : d.pct >= 70 ? [100,140,60] : d.pct >= 55 ? gold : red;
+  doc.setFillColor(...pctColor);
+  doc.roundedRect(margin, y, W-2*margin, 28, 4, 4, 'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(22);
+  doc.setFont('helvetica','bold');
+  doc.text(`${d.total} / 24`, W/2 + 20, y + 14, {align:'center'});
+  doc.setFontSize(11);
+  doc.text(`${d.pct}%`, W/2 - 30, y + 10, {align:'center'});
+  doc.setFontSize(10);
+  doc.text(sanitize(d.grade), W/2 - 30, y + 20, {align:'center'});
+  y += 34;
+
+  if (d.comment) {
+    hdr('Teacher Comments', navy, gold);
+    multiLine('', d.comment);
+  }
+
+  // Footer on last page
+  y = 285;
+  doc.setFontSize(7);
+  doc.setTextColor(160,175,190);
+  doc.text('Generated from Physics Interactive Worksheet | Grade 8 | Mona Mustafa', W/2, y, {align:'center'});
+
+  doc.save(`Assessment_${sanitize(d.studentName) || 'Student'}_Circuits.pdf`);
+  closeModal();
+}
+
+// Close modal on overlay click
+document.getElementById('pdfModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
 </script>
 </body>
 </html>
